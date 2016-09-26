@@ -1,0 +1,32 @@
+<div>
+  <div class="panel-button">
+    <div class="go-left left">
+      <span ng-show="cm.is_listing">listando...</span>
+      <span ng-show="cm.is_deleting">deletando...</span>
+    </div>
+    <div  class=" btn-right go-right">
+      <button class="btn btn-primary" ng-click="cm.create()">Criar</button>
+      <button class="btn btn-primary" ng-click="cm.update()">Editar</button>
+      <button class="btn btn-primary" ng-click="cm.remove()">Deletar</button>
+    </div>
+  </div>
+  <div class="panel panel-div" >
+    <table class="table table-bordered table-center">
+    <tr>
+      <th></th>
+      <th ng-repeat="field in cm.model.crud_fields">{{cm.get_field_name(field)}}</th>
+    </tr>
+    <tr ng-repeat="entity in cm.entities">
+      <td><input name="selected_entity" 
+            type="radio" 
+            ng-model="cm.selected_entity" 
+            ng-value="entity">
+      </td>
+      <td ng-repeat="field in cm.model.crud_fields">
+        {{entity[field.name]}}
+      </td>
+    </tr>
+  </table>
+  </div>
+  
+</div>
