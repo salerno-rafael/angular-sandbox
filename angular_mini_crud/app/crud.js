@@ -45,6 +45,7 @@ angular.module('crud').directive('crudForm', function(){
     },
     templateUrl: 'crud_form.html',
     controller: function($scope){
+      //
     }
   };
 });
@@ -70,7 +71,8 @@ angular.module('crud').factory('CrudModel', function(CrudApi){
     save: save,
     cancel: cancel,
     get_field_name: get_field_name,
-    get_field_include: get_field_include
+    get_field_include: get_field_include,
+    show_crud_form: show_crud_form,
   });
   
   function list(){
@@ -142,6 +144,11 @@ angular.module('crud').factory('CrudModel', function(CrudApi){
   function get_field_include(field){
     var cm = this;
     return 'crud_field_'+field.type+'.html';
+  }
+  
+  function show_crud_form(){
+    var cm = this;
+    return cm.is_creating || cm.is_editing;
   }
   
   return CrudModel;
