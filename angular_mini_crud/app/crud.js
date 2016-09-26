@@ -26,7 +26,7 @@ angular.module('crud').directive('crudGrid', function(){
     scope: {
       cm: '=',
     },
-    templateUrl: 'crud_grid.html',
+    templateUrl: 'crud.list.html',
     controller: function($scope){
       $scope.$watch('cm', function(){
         if($scope.cm){
@@ -43,7 +43,7 @@ angular.module('crud').directive('crudForm', function(){
     scope: {
       cm: '=',
     },
-    templateUrl: 'crud_form.html',
+    templateUrl: 'crud.form.html',
     controller: function($scope){
       //
     }
@@ -143,7 +143,7 @@ angular.module('crud').factory('CrudModel', function(CrudApi){
   
   function get_field_include(field){
     var cm = this;
-    return 'crud_field_'+field.type+'.html';
+    return 'crud.field.'+field.type+'.html';
   }
   
   function show_crud_form(){
