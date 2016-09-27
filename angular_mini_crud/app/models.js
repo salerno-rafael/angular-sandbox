@@ -1,42 +1,44 @@
 (function(){
   angular.module('models', []);
 
-  angular.module('models').factory('models', function(Pessoa){
+  angular.module('models').factory('models', function(Financial){
     /**
      * Um objeto pra registrar os meus modelos de coisas persistentes
      */
     var models = {};
     
-    models.Pessoa = Pessoa;
+    models.Financial = Financial;
     
     return models;
   });
   
-  angular.module('models').factory('Pessoa', function(){
+  angular.module('models').factory('Financial', function(){
     /**
-     * Um construtor de pessoas
+     * Um construtor de Financial
      */
-    function Pessoa(nome, idade){
-      this.nome = nome;
-      this.idade = idade;
+    function Financial(position, symbol,commoditie,tipoDolar,frete,fobbings,premio){
+      this.position = position;
+      this.symbol = symbol;
+      this.commoditie = commoditie;
+      this.tipoDolar = tipoDolar;
+      this.frete = frete;
+      this.fobbings = fobbings;
+      this.premio = premio;
     }
     
-    Pessoa.crud_fields = [
+    Financial.crud_fields = [
       _field('id', 'id'), 
-      _field('nome', 'string'), 
-      _field('idade', 'int')
+      _field('position', 'int'), 
+      _field('symbol', 'string'),
+      _field('commoditie', 'string'),
+      _field('tipoDolar', 'string'),
+      _field('frete', 'int'),
+      _field('fobbings', 'int'),
+      _field('premio', 'int')
+      
     ];
     
-    angular.extend(Pessoa.prototype, {
-      aniversario: aniversario
-    });
-    
-    function aniversario(){
-      var p = this;
-      p.idade++;
-    }
-    
-    return Pessoa;
+    return Financial;
   });
   
   

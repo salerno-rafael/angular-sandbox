@@ -6,19 +6,21 @@ angular.module('myapp').controller('MyCtrl', function($scope, models, CrudApi){
   $scope.crud_options = {
     fields_dictionary: {
       id: 'Codigo',
-      nome: 'Nome do individuo',
-      idade: 'Quantos anos tem'
+      position: 'Posicao',
+      symbol: 'Simbolo',
+      commoditie: 'Commoditie',
+      tipoDolar: 'Tipo de Dolar',
+      frete: 'Frete',
+      fobbings:'Fobbings',
+      premio:'Premio'
+
     },
   };
-  
-  $scope.gentaiada = function(){
-    $scope.model = models.Pessoa;
+   //position, symbol, commoditie, tipoDolar, frete, multiplicador,fobbings, premio
+  $scope.financialModel = function(){
+    $scope.model = models.Financial;
   };
   
-  $scope.cachorrada = function(){
-    $scope.model = models.Animal;
-  };
-  
-  $scope.gentaiada();
+  $scope.financialModel();
   
 });
