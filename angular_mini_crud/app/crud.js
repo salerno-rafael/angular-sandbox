@@ -27,7 +27,12 @@ angular.module('crud').directive('crudGrid', function(){
       cm: '=',
     },
     templateUrl: 'crud.list.html',
-    controller: function($scope){
+    controller: function($scope, $http){
+      $http.get("http://localhost:9000/list")
+      .then(function(response) {
+          response.data;
+      });
+
       $scope.$watch('cm', function(){
         if($scope.cm){
           $scope.cm.list();
