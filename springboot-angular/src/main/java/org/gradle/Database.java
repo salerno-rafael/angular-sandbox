@@ -32,7 +32,7 @@ public class Database {
 			PreparedStatement st = getConnection().prepareStatement("SELECT * from emp_details ORDER BY emp_id ASC");
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next())
+			while (rs.next())
 				lista.add(new Employee(rs.getInt("emp_id"),rs.getString("emp_name"),rs.getString("emp_email"),rs.getString("emp_gender"),rs.getString("emp_address")));
 
 		} catch (SQLException e) {
@@ -41,122 +41,46 @@ public class Database {
 		return lista;
 	}
 
-	public void limpaProcessamentoByUser(String usuario){
-		System.out.println("clean controle_processamento");
+	public void delete(Employee emp){
 		try {
-			PreparedStatement st = getConnection().prepareStatement("delete from safe_bd.controle_processamento where usuario=?");
-			st.setString(1, usuario);
+			PreparedStatement st = getConnection().prepareStatement("delete from emp_details where emp_id=?");
+			st.setInt(1, emp.getEmp_id());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public void limpaConsolidado(String cnpj){
-		System.out.println("clean relatorio_consolidado022015");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("delete from consolidado.relatorio_consolidado022015 where cnpj=?");
-			st.setString(1, cnpj);
-			st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void limpaRelatorios(String arquivo){
-		System.out.println("clean relatorios");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("delete  from safe_bd.relatorios where relatorio like '%"+arquivo+"%'");
-			st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void limpaRegistrosC100(String cnpj){
-		System.out.println("clean registroc100022015");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("delete  from icms_"+cnpj+".registroc100022015");
-			st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void limpaRegistros0200(String cnpj){
-		System.out.println("clean registro0200022015");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("delete  from icms_"+cnpj+".registro0200022015");
-			st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
+	public void update(Employee emp){
+		try {
+			String updateTableSQL = "UPDATE emp_details SET emp_name = ?,emp_email =?,emp_gender=?,emp_address=? WHERE emp_id = ?";
+			PreparedStatement preparedStatement = getConnection().prepareStatement(updateTableSQL);
+			preparedStatement.setString(1, emp.getEmp_name());
+			preparedStatement.setString(2, emp.getEmp_email());
+			preparedStatement.setString(3, emp.getEmp_gender());
+			preparedStatement.setString(4, emp.getEmp_address());
+			preparedStatement.setInt(5, emp.getEmp_id());
+			preparedStatement .executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	public int selectCount(String query,String parameter,String log){
-		System.out.println("get info from "+log);
+	public void insert(Employee emp){
+		String insertTableSQL = "INSERT INTO emp_details(emp_name, emp_email, emp_gender,emp_address) VALUES(?,?,?,?)";
+		PreparedStatement preparedStatement;
 		try {
-			PreparedStatement st = getConnection().prepareStatement("select count(*) as count "+query+" ?");
-			st.setString(1,parameter);
-			ResultSet rs = st.executeQuery();
-
-			if (rs.next())
-				return rs.getInt("count");
-
+			preparedStatement = getConnection().prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, emp.getEmp_name());
+			preparedStatement.setString(2, emp.getEmp_email());
+			preparedStatement.setString(3, emp.getEmp_gender());
+			preparedStatement.setString(4, emp.getEmp_address());
+			preparedStatement .executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		
 	}
 
 
-	public int relatorio(String arq) {
-		System.out.println("get info from relatorios");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("select count(*) as count from safe_bd.relatorios where relatorio like '%"+arq+"%'");
-			ResultSet rs = st.executeQuery();
-
-			if (rs.next())
-				return rs.getInt("count");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	public String registroC(String dt,String cnpj) {
-		System.out.println("get info from registroc100022015");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("select linha  from icms_"+cnpj+ ".registroc100022015 where dt_doc=?");
-			st.setString(1,dt);
-			ResultSet rs = st.executeQuery();
-
-			if (rs.next())
-				return rs.getString("linha");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "";
-	}
-
-
-	
-	public int registro0205(String cnpj) {
-		System.out.println("get info from registro0205022015");
-		try {
-			PreparedStatement st = getConnection().prepareStatement("select count(*) as count  from icms_"+cnpj+ ".registro0205022015");
-			ResultSet rs = st.executeQuery();
-
-			if (rs.next())
-				return rs.getInt("count");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
 }

@@ -13,16 +13,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Application {
 	//https://www.formget.com/angularjs-crud/
+	private Database db= new Database();
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Employee> list() {
-		return new Database().list();
+		return db.list();
 	}
 	
 	 @RequestMapping(value = "/insert",method=RequestMethod.POST)
 	  public void insert(@RequestBody Employee employee) {
-	    System.out.println(employee);
+	    System.out.println("INSERT");
+	    db.insert(employee);
 	  }
 	 
+	 
+	 @RequestMapping(value = "/delete",method=RequestMethod.POST)
+	  public void delete(@RequestBody Employee employee) {
+	    System.out.println("DELETE");
+	    db.delete(employee);
+	  }
+	 
+	 @RequestMapping(value = "/update",method=RequestMethod.POST)
+	  public void update(@RequestBody Employee employee) {
+	    System.out.println("UPDATE");
+	    db.update(employee);
+	  }
 
 
 	public static void main(String[] args) {

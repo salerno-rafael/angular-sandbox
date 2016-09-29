@@ -23,11 +23,9 @@
 
 	$scope.insertInfo = function(info){
 		$http.post('http://localhost:8080/insert',{"emp_name":info.name,"emp_email":info.email,"emp_address":info.address,"emp_gender":info.gender}).success(function(data){
-			if (data == true) {
 				getInfo();
-
+				$scope.details = info;
 				$('#empForm').css('display', 'none');
-				}
 			});
 	}
 
@@ -40,25 +38,23 @@
 	}
 
 	$scope.UpdateInfo = function(info){
-		$http.post('http://localhost:8080/update',{"id":info.emp_id,"name":info.emp_name,"email":info.emp_email,"address":info.emp_address,"gender":info.emp_gender}).success(function(data){
-		$scope.show_form = true;
-		if (data == true) {
-		getInfo();
-		}
+		$http.post('http://localhost:8080/update',{"emp_id":info.emp_id,"emp_name":info.emp_name,"emp_email":info.emp_email,"emp_address":info.emp_address,"emp_gender":info.emp_gender}).success(function(data){
+			getInfo();
+			$scope.currentUser = {};
 		});
+		
 	}
 
 	$scope.deleteInfo = function(info){
-		$http.post('http://localhost:8080/delete',{"del_id":info.emp_id}).success(function(data){
-		if (data == true) {
-		getInfo();
-		}
+		$http.post('http://localhost:8080/delete',{"emp_id":info.emp_id}).success(function(data){
+			getInfo();
 		});
+		
 	}
 
-$scope.updateMsg = function(emp_id){
-$('#editForm').css('display', 'none');
-}
+	$scope.updateMsg = function(emp_id){
+	$('#editForm').css('display', 'none');
+	}
 
 	});
 })();
